@@ -2,16 +2,22 @@ const express = require("express");
 const mongoose = require("mongoose");
 const bodyParser = require("body-parser");
 const passport = require("passport");
-const nunjucks = require("nunjucks");
-const keys = require("./config/keys");
 
+//use Routes
+const userRoutes = require("./routes/user");
+const profileRoutes = require("./routes/profile");
+const classListRoutes = require("./routes/classList");
+const courseRoutes = require("./routes/course");
+const assignmentRoutes = require("./routes/assignment");
+const print = require("./generate-endpoints");
 const app = express();
+const cors = require("cors");
+const keys = require("./config/keys");
 
 //Body parser middlware
 app.use(bodyParser.urlencoded({ urlencoded: false }));
 app.use(bodyParser.json());
 app.use(cors());
-nunjucks.configure("views", { express: app });
 
 //DB config
 const db = require("./config/keys").mongoURI;
@@ -30,6 +36,13 @@ require("./config/passport")(passport);
 
 // api dump
 app.use("/api", userRoutes);
+app.use("/api", profileRoutes);
+app.use("/api", classListRoutes);
+app.use("/api/user", courseRoutes);
+app.use("/api", assignmentRoutes);
+
+// Generating Endpoints
+app._router.stack.forEach(print.bind(null, []));
 
 const port = process.env.PORT || 3000;
 
