@@ -90,6 +90,44 @@ router.post("/login", (req, res) => {
 });
 
 
+router.get("/user/:user_id/deadlines",(req,res)=>{
+
+  const agg = [
+    {
+      '$match': {
+        'user': new ObjectId(req.params.user_id)
+      }
+    }, {
+      '$lookup': {
+        'from': 'assignments',
+        'localField': 'courseList',
+        'foreignField': 'course',
+        'as': 'Assignments'
+      }
+    }, {
+      '$project': {
+        'Assignments': 1
+      }
+    }, {
+      '$unwind': {
+        'path': '$Assignments'
+      }
+    }, {
+      '$match': {
+        'Assignments.submissionDate': {
+          '$gt': new Date()
+        }
+      }
+    }
+  ];
+
+  Profile.aggregate(agg,(err, result) => {
+    if (err){
+      console.log(err)
+    }
+    res.json(result);
+  });
+});
 
 // GET - Get user
 router.get(
