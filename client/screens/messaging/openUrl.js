@@ -1,6 +1,6 @@
 import React from "react";
 import { useCallback } from "react";
-import { Button } from "react-native";
+import { Button, View } from "react-native";
 import { Alert } from "react-native";
 import { Linking } from "react-native";
 
@@ -18,5 +18,5 @@ export const OpenURLButton = ({ url, children }) => {
     }
   }, [url]);
 
-  return <Button title={children} onPress={handlePress} />;
+  return <Button color="#888" title={children} onPress={handlePress} />;
 };

@@ -4,7 +4,7 @@ const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
 const keys = require("../config/keys");
 const passport = require("passport");
-
+const Profile = require("../models/Profile");
 // Load input validation
 const validateRegisterInput = require("../validation/register");
 const validateLoginInput = require("../validation/login");
@@ -89,41 +89,43 @@ router.post("/login", (req, res) => {
   });
 });
 
-
-router.get("/user/:user_id/deadlines",(req,res)=>{
-
+router.get("/user/:user_id/deadlines", (req, res) => {
   const agg = [
     {
-      '$match': {
-        'user': new ObjectId(req.params.user_id)
-      }
-    }, {
-      '$lookup': {
-        'from': 'assignments',
-        'localField': 'courseList',
-        'foreignField': 'course',
-        'as': 'Assignments'
-      }
-    }, {
-      '$project': {
-        'Assignments': 1
-      }
-    }, {
-      '$unwind': {
-        'path': '$Assignments'
-      }
-    }, {
-      '$match': {
-        'Assignments.submissionDate': {
-          '$gt': new Date()
-        }
-      }
-    }
+      $match: {
+        user: new ObjectId(req.params.user_id),
+      },
+    },
+    {
+      $lookup: {
+        from: "assignments",
+        localField: "courseList",
+        foreignField: "course",
+        as: "Assignments",
+      },
+    },
+    {
+      $project: {
+        Assignments: 1,
+      },
+    },
+    {
+      $unwind: {
+        path: "$Assignments",
+      },
+    },
+    {
+      $match: {
+        "Assignments.submissionDate": {
+          $gt: new Date(),
+        },
+      },
+    },
   ];
 
-  Profile.aggregate(agg,(err, result) => {
-    if (err){
-      console.log(err)
+  Profile.aggregate(agg, (err, result) => {
+    if (err) {
+      console.log(err);
     }
     res.json(result);
   });
@@ -141,5 +143,18 @@ router.get(
     });
   }
 );
+
+// GET - Get user
+router.get("/users", (req, res) => {
+  Profile.find()
+    .populate("user")
+    .then((profiles) => {
+      if (!profiles) {
+        console.log(err);
+      } else {
+        res.json(profiles);
+      }
+    });
+});
 
 module.exports = router;

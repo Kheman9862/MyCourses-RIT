@@ -7,11 +7,11 @@ import {
   TextInput,
   StyleSheet,
   TouchableOpacity,
-  Image,
+  Image
 } from "react-native";
 import { useDispatch } from "react-redux";
 import * as authActions from "../../store/actions/auth";
-import { MaterialCommunityIcons } from "@expo/vector-icons";
+import { MaterialCommunityIcons } from '@expo/vector-icons';
 
 const LoginForm = (props) => {
   const [error, setError] = useState();
@@ -20,6 +20,7 @@ const LoginForm = (props) => {
 
   const dispatch = useDispatch();
 
+  
   const loginHandler = async () => {
     try {
       await dispatch(
@@ -37,53 +38,51 @@ const LoginForm = (props) => {
   return (
     <View style={styles.container}>
       {error ? <Text>{error}</Text> : <Text></Text>}
-      <View style={{ flex: 1, justifyContent: "center" }}>
-        <Text
-          style={{
-            textAlign: "left",
-            fontSize: 32,
-            marginBottom: 10,
-            fontWeight: "700",
-            color: "#777",
-          }}
-        >
-          Login
-        </Text>
+      <View  style={{flex:1, justifyContent:"center", }}>
+        
 
+        <Text style={{textAlign:"left", fontSize: 32, marginBottom: 10, fontWeight:'700', color:"#777" }}>Login</Text>
+        
         <View style={{}}>
-          <MaterialCommunityIcons
-            name="email"
-            size={24}
-            color="#777"
-            style={{ position: "absolute", right: 5, bottom: 25 }}
-          />
+        
+          <MaterialCommunityIcons name="email" size={24} color="#777" 
+            style={{position:"absolute", right:5, bottom:25}} />
 
           <TextInput
-            style={styles.input}
-            placeholder="Enter Email"
-            onChangeText={(email) => setEmail(email)}
-            inlineImageLeft="username"
-            inlineImagePadding={2}
-            underlineColorAndroid="transparent"
-          />
+              style={styles.input}
+              placeholder= "Enter Email"
+              onChangeText={(email) => setEmail(email)}
+              inlineImageLeft="username"
+              inlineImagePadding={2}
+              underlineColorAndroid="transparent"
+
+
+            />
+
+            
+            
         </View>
+         
+        
+       
 
         <View>
-          <MaterialCommunityIcons
-            name="form-textbox-password"
-            size={24}
-            color="#777"
-            style={{ position: "absolute", right: 5, bottom: 25 }}
-          />
+        <MaterialCommunityIcons name="form-textbox-password" size={24} color="#777" 
+        style={{position:"absolute", right:5, bottom:25}}/>
 
-          <TextInput
-            style={styles.input}
-            placeholder="Enter Password"
-            secureTextEntry={true}
-            onChangeText={(password) => setPassword(password)}
-            underlineColorAndroid="transparent"
-          />
+        <TextInput
+          style={styles.input}
+          placeholder="Enter Password"
+          secureTextEntry={true}
+          onChangeText={(password) => setPassword(password)}
+          underlineColorAndroid="transparent"
+          
+        />
+
         </View>
+        
+        
+       
 
         <TouchableOpacity
           style={styles.buttonContainer}
@@ -94,12 +93,10 @@ const LoginForm = (props) => {
         </TouchableOpacity>
 
         <TouchableOpacity
-          style={{ color: "red" }}
+          style={{color:"red"}}
           onPress={() => props.navigation.navigate("Register")}
         >
-          <Text style={{ textAlign: "center", color: "#f76902" }}>
-            Not a User ? Register here{" "}
-          </Text>
+          <Text style={{textAlign:"center", color:"#f76902"}}>Not a User ? Register here </Text>
         </TouchableOpacity>
       </View>
     </View>
@@ -108,10 +105,11 @@ const LoginForm = (props) => {
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
-    justifyContent: "center",
-    alignSelf: "center",
-    width: Dimensions.get("window").width * 0.85,
+      flex:1,
+      justifyContent:"center",
+      alignSelf:"center",
+      width:Dimensions.get('window').width*0.85,
+      
   },
   welcome: {
     fontSize: 30,
@@ -129,15 +127,17 @@ const styles = StyleSheet.create({
     shadowColor: "#000",
     borderBottomColor: "#777",
     borderBottomWidth: 2,
-    fontSize: 16,
+    fontSize:16
+
+    
   },
   buttonContainer: {
-    width: Dimensions.get("screen").width * 0.7,
+    width:Dimensions.get('screen').width*0.7,
     backgroundColor: "#f76902",
     paddingVertical: 15,
     borderRadius: 30,
     marginBottom: 15,
-    alignSelf: "center",
+    alignSelf:"center",
   },
   buttonText: {
     textAlign: "center",

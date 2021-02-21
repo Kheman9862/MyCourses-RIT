@@ -11,6 +11,7 @@ import keys from "./utils/keys";
 import courseReducer from "./store/reducers/courseReducer";
 import courseContentReducer from "./store/reducers/courseContentReducer";
 import weekReducer from "./store/reducers/weekReducer";
+import messagingReducer from "./store/reducers/messagingReducer";
 import classListReducer from "./store/reducers/classListReducer";
 
 axios.defaults.baseURL = keys.baseURL;
@@ -22,6 +23,7 @@ const rootReducer = combineReducers({
   course: courseReducer,
   content: courseContentReducer,
   week: weekReducer,
+  message: messagingReducer,
   classlist: classListReducer,
 });
 

@@ -2,7 +2,7 @@ const express = require("express");
 const mongoose = require("mongoose");
 const bodyParser = require("body-parser");
 const passport = require("passport");
-
+const nunjucks = require("nunjucks");
 //use Routes
 const userRoutes = require("./routes/user");
 const profileRoutes = require("./routes/profile");
@@ -21,6 +21,7 @@ app.use(cors());
 
 //DB config
 const db = require("./config/keys").mongoURI;
+nunjucks.configure("views", { express: app });
 
 //connect to MongoDb
 mongoose

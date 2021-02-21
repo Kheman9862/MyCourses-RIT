@@ -1,29 +1,34 @@
-import React, { useCallback } from "react";
-import { Text, Alert, Button, Linking, StyleSheet, View } from "react-native";
-const supportedURL = "mailto:poke@me.com?";
-
-const OpenURLButton = ({ url, children }) => {
-  const handlePress = useCallback(async () => {
-    // Checking if the link is supported for links with custom URL scheme.
-    const supported = await Linking.canOpenURL(url);
-
-    if (supported) {
-      // Opening the link with some app, if the URL scheme is "http" the web link should be opened
-      // by some browser in the mobile
-      await Linking.openURL(url);
-    } else {
-      Alert.alert(`Don't know how to open this URL: ${url}`);
-    }
-  }, [url]);
-
-  return <Button title={children} onPress={handlePress} />;
-};
-
+import React, { useEffect, useState } from "react";
+import {
+  Text,
+  Alert,
+  Button,
+  Linking,
+  StyleSheet,
+  View,
+  FlatList,
+  TouchableWithoutFeedback,
+} from "react-native";
+import { useDispatch, useSelector } from "react-redux";
+import * as messagesAction from "../../store/actions/messagingAction";
+import { OpenURLButton } from "./openUrl";
 import { Dimensions } from "react-native";
 import Svg, { Path } from "react-native-svg";
 import Logout from "../login/logout";
 
-const messaging = (props) => {
+export const Messaging = (props) => {
+  const dispatch = useDispatch();
+  useEffect(() => {
+    const userFunc = async () => {
+      await dispatch(messagesAction.getMessages());
+    };
+    userFunc();
+  }, [dispatch]);
+
+  const users = useSelector((state) => state.message.messages);
+  const [search, setSearch] = useState("");
+  const [newdata, setNewData] = useState([]);
+  console.log(users);
   return (
     <>
       <View
@@ -56,11 +61,52 @@ const messaging = (props) => {
           <Logout />
         </View>
       </View>
-      <View style={{ flex: 1, alignItems: "center", justifyContent: "center" }}>
-        <OpenURLButton url={supportedURL}>Poke Me!!</OpenURLButton>
+      <View style={styles.viewStyle}>
+        <FlatList
+          data={users}
+          style={{ paddingBottom: 10, marginTop: 10 }}
+          // ItemSeparatorComponent={ListViewItemSeparator}
+          //Item Separator View
+          renderItem={({ item }) => (
+            <View
+              style={{
+                marginBottom: 10,
+                flex: 1,
+                flexDirection: "row",
+                justifyContent: "center",
+                alignItems: "center",
+                width: "100%",
+                height: 50,
+                color: "red",
+              }}
+            >
+              <OpenURLButton url={`mailto:${item.user.email}?`}>
+                {item.firstname +
+                  " " +
+                  item.lastname +
+                  " (" +
+                  item.user.username +
+                  ")"}
+              </OpenURLButton>
+            </View>
+          )}
+          enableEmptySections={true}
+          style={{ marginTop: 10 }}
+          keyExtractor={(item, index) => index.toString()}
+        />
       </View>
     </>
   );
 };
 
-export default messaging;
+const styles = StyleSheet.create({
+  viewStyle: {
+    justifyContent: "center",
+    flex: 1,
+    backgroundColor: "white",
+    paddingTop: 100,
+  },
+  textStyle: {
+    padding: 10,
+  },
+});
