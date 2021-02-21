@@ -2,17 +2,16 @@ const express = require("express");
 const mongoose = require("mongoose");
 const bodyParser = require("body-parser");
 const passport = require("passport");
+const nunjucks = require("nunjucks");
 const keys = require("./config/keys");
 
-
 const app = express();
-
-
 
 //Body parser middlware
 app.use(bodyParser.urlencoded({ urlencoded: false }));
 app.use(bodyParser.json());
 app.use(cors());
+nunjucks.configure("views", { express: app });
 
 //DB config
 const db = require("./config/keys").mongoURI;
@@ -23,7 +22,6 @@ mongoose
   .then(() => console.log("Success"))
   .catch((err) => console.log(err));
 
-
 //Passport middleware
 app.use(passport.initialize());
 
@@ -32,7 +30,6 @@ require("./config/passport")(passport);
 
 // api dump
 app.use("/api", userRoutes);
-
 
 const port = process.env.PORT || 3000;
 
