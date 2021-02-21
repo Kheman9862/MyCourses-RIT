@@ -42,6 +42,8 @@ router.post(
     const profileFields = {};
     profileFields.user = req.user.id;
     if (req.body.nickname) profileFields.nickname = req.body.nickname;
+    if (req.body.nickname) profileFields.firstname = req.body.nickname;
+    if (req.body.nickname) profileFields.lastname = req.body.nickname;
     if (req.body.hometown) profileFields.hometown = req.body.hometown;
     if (req.body.facebook) profileFields.facebook = req.body.facebook;
     if (req.body.twitter) profileFields.twitter = req.body.twitter;
