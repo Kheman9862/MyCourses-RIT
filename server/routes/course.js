@@ -6,6 +6,7 @@ const Profile = require("../models/Profile");
 const Course = require("../models/course");
 const Content = require("../models/content");
 const Weekly = require("../models/week");
+const Files = require("../models/file");
 
 router.get(
   "/profile",
@@ -95,28 +96,24 @@ router.get("/:user_id/courses/:id", function (req, res) {
 router.get("/:user_id/courses/:id/:weekId", function (req, res) {
   //find the course with provided ID
   Course.findById(req.params.id)
-    .populate("Content")
+    .populate("courseContent")
     .exec(function (err, foundCourse) {
       if (err) {
         console.log(err);
       } else {
         Content.findById(foundCourse.courseContent)
-          .populate("Weekly")
+          .populate("week")
           .exec(function (err, foundContent) {
             if (err) {
               console.log(err);
             } else {
               // res.json(foundContent);
-              Weekly.findOne({ weekId: req.params.weekId }).exec(function (
-                err,
-                foundWeekly
-              ) {
-                if (err) {
-                  console.log(err);
-                } else {
-                  res.json(foundWeekly.item);
-                }
-              });
+              Weekly.findOne({ weekId: req.params.weekId })
+                .populate("files")
+                .then((weekly) => {
+                  // res.json(course.courseContent);
+                  res.json(weekly);
+                });
             }
           });
         // res.json(foundContent);

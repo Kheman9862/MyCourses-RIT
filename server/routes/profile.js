@@ -7,8 +7,8 @@ const multer = require("multer");
 const uuid = require("uuid").v4;
 const AWS = require("aws-sdk");
 const awskeys = require("../config/aws-keys").AWS;
-const {ObjectId} = require("mongodb");
 var url;
+const { ObjectId } = require("mongodb");
 
 // Multer Configuration
 const storage = multer.memoryStorage({
@@ -42,6 +42,8 @@ router.post(
     const profileFields = {};
     profileFields.user = req.user.id;
     if (req.body.nickname) profileFields.nickname = req.body.nickname;
+    if (req.body.nickname) profileFields.firstname = req.body.nickname;
+    if (req.body.nickname) profileFields.lastname = req.body.nickname;
     if (req.body.hometown) profileFields.hometown = req.body.hometown;
     if (req.body.facebook) profileFields.facebook = req.body.facebook;
     if (req.body.twitter) profileFields.twitter = req.body.twitter;
@@ -73,7 +75,6 @@ router.post(
           url = dataFile.Location;
           a(url);
           // console.log(dataFile.Location);
-
           // console.log(dataFile.Location);
           // profileFields.profile_pic = url;
           // console.log(profileFields.profile_pic);
@@ -170,56 +171,46 @@ router.get(
   }
 );
 
+router.get("/:user_id/deadlines", (req, res) => {
+  const agg = [
+    {
+      $match: {
+        user: new ObjectId(req.params.user_id),
+      },
+    },
+    {
+      $lookup: {
+        from: "assignments",
+        localField: "courseList",
+        foreignField: "course",
+        as: "Assignments",
+      },
+    },
+    {
+      $project: {
+        Assignments: 1,
+      },
+    },
+    {
+      $unwind: {
+        path: "$Assignments",
+      },
+    },
+    {
+      $match: {
+        "Assignments.submissionDate": {
+          $gt: new Date(),
+        },
+      },
+    },
+  ];
 
-
-router.get("/:user_id/deadlines",(req,res)=>{
-
-    const agg = [
-        {
-            '$match': {
-                'user': new ObjectId(req.params.user_id)
-            }
-        }, {
-            '$lookup': {
-                'from': 'assignments',
-                'localField': 'courseList',
-                'foreignField': 'course',
-                'as': 'Assignments'
-            }
-        }, {
-            '$project': {
-                'Assignments': 1
-            }
-        }, {
-            '$unwind': {
-                'path': '$Assignments'
-            }
-        }, {
-            '$match': {
-                'Assignments.submissionDate': {
-                    '$gt': new Date()
-                }
-            }
-        }, {
-            '$lookup': {
-                'from': 'courses',
-                'localField': 'Assignments.course',
-                'foreignField': '_id',
-                'as': 'CourseContent'
-            }
-        }, {
-            '$unwind': {
-                'path': '$CourseContent'
-            }
-        }
-    ];
-
-    Profile.aggregate(agg,(err, result) => {
-        if (err){
-            console.log(err)
-        }
-        res.json(result);
-    });
+  Profile.aggregate(agg, (err, result) => {
+    if (err) {
+      console.log(err);
+    }
+    res.json(result);
+  });
 });
 
 module.exports = router;
