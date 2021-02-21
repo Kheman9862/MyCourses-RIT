@@ -1,87 +1,123 @@
 import React, { Component } from "react";
-import { AppRegistry, StyleSheet, Text, View } from "react-native";
-import ScrollableTabView from "react-native-scrollable-tab-view";
-import TabBar from "react-native-underline-tabbar";
-import AssignmentInfo from "./contentBox/assignmentInfo";
-import ContentInfo from "./contentBox/contentInfo";
-import UpComingEvents from "./contentBox/upcomingEvents";
-import ClassList from "./contentBox/classList";
+import { AppRegistry, StyleSheet, Text, View, Image } from "react-native";
+import { SafeAreaView } from "react-native";
+import { FlatList, TouchableOpacity } from "react-native-gesture-handler";
+import { Dimensions } from "react-native";
 
-const Assignment = ({ label, navigation }) => (
-  <View style={styles.container}>
-    <AssignmentInfo navigation={navigation} />
-  </View>
-);
+var width = Dimensions.get("window").width; //full width
+var height = Dimensions.get("window").height; //full height
 
-const Content = ({ label, navigation,contentItem }) => (
-  <View style={styles.container}>
-    <ContentInfo navigation={navigation} contentItem={contentItem} />
-  </View>
-);
-
-const Class = ({ label, navigation }) => (
-  <View style={styles.container}>
-    <ClassList navigation={navigation} />
-  </View>
-);
-
-const Calender = ({ label, navigation }) => (
-  <View style={styles.container}>
-    <UpComingEvents navigation={navigation} />
-  </View>
-);
+const tabs = [
+  {
+    id: "1",
+    name: "Content",
+  },
+  {
+    id: "2",
+    name: "Assignment",
+  },
+  {
+    id: "3",
+    name: "ClassList",
+  },
+  {
+    id: "4",
+    name: "Upcoming Events",
+  },
+];
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-
+    marginTop: 0,
     backgroundColor: "#F5FCFF",
   },
-  welcome: {
-    fontSize: 32,
-    textAlign: "center",
-    margin: 10,
+  item: {
+    backgroundColor: "white",
+    padding: 15,
+    marginVertical: 8,
+    marginHorizontal: 16,
+    borderColor: "lightgrey",
+    borderWidth: 1,
+    borderRadius: 10,
+    backgroundColor: "#F5FCFF",
+    shadowColor: "#000",
+    shadowOffset: {
+      width: 0,
+      height: 2,
+    },
+    shadowOpacity: 0.25,
+    shadowRadius: 3.84,
+    elevation: 5,
   },
-  instructions: {
+  title: {
+    fontSize: 16,
+    color: "grey",
+  },
+  name: {
+    fontSize: 42,
+
     textAlign: "center",
-    color: "#333333",
-    marginBottom: 5,
-    fontSize: 32,
+
+    top: height * 0.3,
+
+    fontWeight: "700",
+    marginLeft: 10,
+
+    color: "#FFF",
+    letterSpacing: 2,
+  },
+  term: {
+    fontSize: 22,
+    marginTop: 30,
+    marginLeft: 20,
+    textAlign: "center",
+    color: "#777",
   },
 });
 
 export default class TabViewExample extends Component {
   render() {
-    return (
-      <View style={[styles.container, { paddingTop: 20 }]}>
-        <ScrollableTabView
-          tabBarActiveTextColor="#53ac49"
-          tabBarTextStyle={{ fontSize: 10 }}
-          renderTabBar={() => <TabBar underlineColor="#53ac49" />}
-        >
-          <Content
-            navigation={this.props.navigation}
-            contentItem={this.props.data._id}
-            tabLabel={{ label: "Content" }}
-            label="Page #2 aka Long!"
-          />
-          <Assignment
-            navigation={this.props.navigation}
-            tabLabel={{ label: "Assignment" }}
-            label="Assignment"
-          />
+    const data = this.props.data;
 
-          <Class
-            navigation={this.props.navigation}
-            tabLabel={{ label: "ClassList" }}
-            label="Page #3"
-          />
-          <Calender
-            navigation={this.props.navigation}
-            tabLabel={{ label: "Up Coming Events" }}
-            label="Page #4 aka Page"
-          />
-        </ScrollableTabView>
+    return (
+      <View style={[styles.container]}>
+        <View style={{ flex: 1 }}>
+          <View
+            style={[
+              StyleSheet.absoluteFillObject,
+              { marginTop: 0, height: height * 0.5 },
+            ]}
+          >
+            <Image
+              style={{ flex: 1 }}
+              source={{
+                uri: data.uri,
+              }}
+            />
+          </View>
+          <Text style={styles.name}>{data.courseId}</Text>
+          <Text style={styles.name}>{data.courseName}</Text>
+          <Text style={styles.term}>{data.term}</Text>
+
+          <SafeAreaView>
+            <FlatList
+              data={tabs}
+              keyExtractor={(item) => item.id}
+              style={{ transform: [{ translateY: height * 0.3 }] }}
+              renderItem={({ item }) => (
+                <TouchableOpacity
+                  style={styles.item}
+                  onPress={() =>
+                    this.props.navigation.navigate(item.name, data)
+                  }
+                >
+                  <Text style={styles.title}>{item.name}</Text>
+                </TouchableOpacity>
+              )}
+            />
+          </SafeAreaView>
+        </View>
       </View>
     );
   }

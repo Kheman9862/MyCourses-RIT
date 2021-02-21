@@ -9,7 +9,7 @@ const CredentialNavigation = (props) => {
   const loginCredentials = useSelector((state) => state.auth.isAuthenticated);
   return (
     <NavigationContainer>
-      {!splashView && loginCredentials && <AppNavigation />} //Yet to make
+      {!splashView && loginCredentials && <AppNavigation />}
       {!splashView && !loginCredentials && <AuthNavigator />}
       {splashView && <SplashScreen />}
     </NavigationContainer>

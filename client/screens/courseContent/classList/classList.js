@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import {
   StyleSheet,
   Text,
@@ -7,6 +7,7 @@ import {
   ScrollView,
   FlatList,
   SafeAreaView,
+  ActivityIndicator,
   Image,
 } from "react-native";
 import { Button, Card, Title, Paragraph } from "react-native-paper";
@@ -17,18 +18,44 @@ var height = Dimensions.get("window").height; //full height
 
 import { data } from "./classListData";
 import { TouchableWithoutFeedback } from "react-native-gesture-handler";
+import { useDispatch, useSelector } from "react-redux";
+import * as classListActions from "../../../store/actions/classListAction";
+import Colors from "../../../UI/Colors";
 
-const classList = () => {
+const classList = (props) => {
+  //api/:user_id/courses/:id/classlist
+
+  const user = useSelector((state) => state.auth.user);
+  const loading = useSelector((state) => state.classlist.loading);
+  const courses = useSelector((state) => state.course.courses);
+  const data = props.route.params;
+  const dispatch = useDispatch();
+  useEffect(() => {
+    const ClasslistContent = async () => {
+      await dispatch(
+        classListActions.getClasslist(
+          user.user,
+          courses.courseList.filter((x) => x._id == data._id)[0]._id
+        )
+      );
+    };
+    ClasslistContent();
+  }, [dispatch]);
+
+  const classlist = useSelector((state) => state.classlist.classlist);
+
+  console.log(classlist);
+
   return (
     <SafeAreaView style={styles.container}>
       <FlatList
-        data={data}
-        keyExtractor={(item) => item.id}
+        data={classlist}
+        keyExtractor={(item) => item._id}
         renderItem={({ item }) => {
           return (
             <TouchableWithoutFeedback
               onPress={() =>
-                navigation.navigate("SingleCourseContent", { item })
+                props.navigation.navigate("ProfileClassList", { item })
               }
             >
               <View
@@ -59,7 +86,7 @@ const classList = () => {
                   }}
                 >
                   <Image
-                    source={{ uri: item.uri }}
+                    source={{ uri: item.profile_pic }}
                     style={styles.image}
                   ></Image>
                   <View>
@@ -69,41 +96,6 @@ const classList = () => {
                     <Text style={styles.username}>{item.username}</Text>
                   </View>
                 </View>
-                {/* <Card
-                style={
-                  (styles.card,
-                  {
-                    flex: 1,
-                    borderRadius: 10,
-                    borderColor: "#ddd",
-                    borderBottomWidth: 3,
-                    shadowColor: "#000",
-                    shadowOffset: { width: 0, height: 3 },
-                    shadowOpacity: 0.4,
-                    shadowRadius: 2,
-                    elevation: 1,
-                  })
-                }
-              >
-                <Card.Cover
-                  source={{
-                    uri: item.uri,
-                  }}
-                  style={(styles.cover, { flex: 1 })}
-                />
-                <View
-                  style={{
-                    borderBottomColor: "orange",
-                    borderBottomWidth: 5,
-                  }}
-                ></View>
-                {/* <View style={styles.cardBottom}>
-                  <Text style={styles.bold}>
-                    {item.firstName} {item.lastName}
-                  </Text>
-                  <Text>{item.username}</Text>
-                </View> 
-              </Card> */}
               </View>
             </TouchableWithoutFeedback>
           );

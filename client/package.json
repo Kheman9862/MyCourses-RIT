@@ -5,7 +5,8 @@
     "android": "expo start --android",
     "ios": "expo start --ios",
     "web": "expo start --web",
-    "eject": "expo eject"
+    "eject": "expo eject",
+    "pretty-quick": "pretty-quick"
   },
   "dependencies": {
     "@expo/vector-icons": "^12.0.0",
@@ -20,6 +21,8 @@
     "axios": "^0.21.1",
     "expo": "~40.0.0",
     "expo-av": "^9.0.0",
+    "expo-notifications": "^0.9.0",
+    "expo-permissions": "^10.0.0",
     "expo-status-bar": "~1.0.3",
     "expo-video-player": "^1.6.1",
     "jwt-decode": "^3.1.2",

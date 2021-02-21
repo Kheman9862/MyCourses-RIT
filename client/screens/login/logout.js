@@ -7,7 +7,10 @@ import * as authActions from "../../store/actions/auth";
 const Logout = (props) => {
   const dispatch = useDispatch();
   return (
-    <HeaderButtons HeaderButtonComponent={HeaderButton}>
+    <HeaderButtons
+      HeaderButtonComponent={HeaderButton}
+      style={{ color: "white" }}
+    >
       <Item
         title="Cart"
         iconName="md-log-out"
