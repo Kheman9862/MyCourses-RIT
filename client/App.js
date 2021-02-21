@@ -1,21 +1,27 @@
-import { StatusBar } from 'expo-status-bar';
-import React from 'react';
-import { StyleSheet, Text, View } from 'react-native';
+import React from "react";
+import { Provider } from "react-redux";
+import { applyMiddleware, combineReducers, createStore } from "redux";
+import ReduxThunk from "redux-thunk";
+import authReducer from "./store/reducers/authReducer";
+import splashReducer from "./store/reducers/splashReducer";
+import axios from "axios";
+import CredentialNavigation from "./navigation/credentialNavigation";
+import keys from "./utils/keys";
+
+
+axios.defaults.baseURL = keys.baseURL;
+
+const rootReducer = combineReducers({
+  auth: authReducer,
+
+})
+
+const store = createStore(rootReducer, applyMiddleware(ReduxThunk));
 
 export default function App() {
   return (
-    <View style={styles.container}>
-      <Text>Open up App.js to start working on your app!</Text>
-      <StatusBar style="auto" />
-    </View>
+    <Provider store={store}>
+      <CredentialNavigation />
+    </Provider>
   );
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-});
