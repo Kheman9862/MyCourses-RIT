@@ -3,9 +3,6 @@ import { Ionicons } from "@expo/vector-icons";
 import { createStackNavigator } from "@react-navigation/stack";
 import {
   createDrawerNavigator,
-  DrawerContentScrollView,
-  DrawerItemList,
-  DrawerItem,
 } from "@react-navigation/drawer";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 
@@ -14,11 +11,7 @@ import courseScreen from "../screens/courses/courses";
 import courseDetailScreen from "../screens/courses/course/course";
 import { CoursesScreenOptions } from "../screens/courses/courses";
 import messagingScreen from "../screens/messaging/messaging";
-import upcomingScreen from "../screens/upcoming/upcoming";
-import notificationScreen from "../screens/notifications/notification";
 
-import { NavigationContainer } from "@react-navigation/native";
-import Colors from "../UI/Colors";
 import LoginScreen, { LoginScreenOptions } from "../screens/login/login";
 import RegisterScreen, {
   RegisterScreenOptions,
@@ -34,7 +27,7 @@ const defaultNavOptions = {
 
 const CourseStackNavigator = () => {
   return (
-    <Stack.Navigator initialRouteName="Home" screenOptions={defaultNavOptions}>
+    <Stack.Navigator screenOptions={defaultNavOptions}>
       <Stack.Screen
         name="Course"
         component={courseScreen}
@@ -52,24 +45,11 @@ const ProfileStackNavigator = () => {
     </Stack.Navigator>
   );
 };
-const UpcomingStackNavigator = () => {
-  return (
-    <Stack.Navigator screenOptions={defaultNavOptions}>
-      <Stack.Screen name="Upcoming" component={upcomingScreen} />
-    </Stack.Navigator>
-  );
-};
+
 const MessagingStackNavigator = () => {
   return (
     <Stack.Navigator screenOptions={defaultNavOptions}>
       <Stack.Screen name="Message" component={messagingScreen} />
-    </Stack.Navigator>
-  );
-};
-const NotificationStackNavigator = () => {
-  return (
-    <Stack.Navigator screenOptions={defaultNavOptions}>
-      <Stack.Screen name="Notification" component={notificationScreen} />
     </Stack.Navigator>
   );
 };
@@ -86,12 +66,8 @@ const AppNavigation = () => {
             iconName = "book";
           } else if (route.name === "Profile") {
             iconName = "person";
-          } else if (route.name === "Upcoming") {
-            iconName = "calendar";
           } else if (route.name === "Message") {
             iconName = "chatbubbles";
-          } else if (route.name === "Notification") {
-            iconName = "notifications";
           }
 
           return <Ionicons name={iconName} size={size} color={color} />;
@@ -101,16 +77,15 @@ const AppNavigation = () => {
         activeTintColor: "#F76902",
         inactiveTintColor: "gray",
       }}
+      initialRouteName={"Course"}
     >
       <Tab.Screen name="Profile" component={ProfileStackNavigator} />
-      <Tab.Screen name="Upcoming" component={UpcomingStackNavigator} />
       <Tab.Screen
         options={{ title: "Courses" }}
         name="Course"
         component={CourseStackNavigator}
       />
       <Tab.Screen name="Message" component={MessagingStackNavigator} />
-      <Tab.Screen name="Notification" component={NotificationStackNavigator} />
     </Tab.Navigator>
   );
 };
