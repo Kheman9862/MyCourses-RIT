@@ -1,16 +1,14 @@
 import React from "react";
 import { Ionicons } from "@expo/vector-icons";
 import { createStackNavigator } from "@react-navigation/stack";
-import {
-  createDrawerNavigator,
-} from "@react-navigation/drawer";
+import { createDrawerNavigator } from "@react-navigation/drawer";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 
 import profileScreen from "../screens/profile/profile";
 import courseScreen from "../screens/courses/courses";
 import courseDetailScreen from "../screens/courses/course/course";
 import { CoursesScreenOptions } from "../screens/courses/courses";
-import messagingScreen from "../screens/messaging/messaging";
+import { Messaging } from "../screens/messaging/messaging";
 
 import LoginScreen, { LoginScreenOptions } from "../screens/login/login";
 import RegisterScreen, {
@@ -49,7 +47,7 @@ const ProfileStackNavigator = () => {
 const MessagingStackNavigator = () => {
   return (
     <Stack.Navigator screenOptions={defaultNavOptions}>
-      <Stack.Screen name="Message" component={messagingScreen} />
+      <Stack.Screen name="Message" component={Messaging} />
     </Stack.Navigator>
   );
 };
