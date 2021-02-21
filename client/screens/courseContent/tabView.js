@@ -20,10 +20,6 @@ const tabs = [
     id: "3",
     name: "ClassList",
   },
-  {
-    id: "4",
-    name: "Upcoming Events",
-  },
 ];
 
 const styles = StyleSheet.create({

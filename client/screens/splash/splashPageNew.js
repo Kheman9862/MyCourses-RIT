@@ -10,7 +10,7 @@ function SplashPageNew() {
   useEffect(() => {
     const timer = setTimeout(() => {
       dispatch(splashAction.splashFlag(false));
-    }, 500);
+    }, 5000);
     return () => clearTimeout(timer);
   }, [dispatch]);
 

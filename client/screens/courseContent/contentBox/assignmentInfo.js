@@ -6,8 +6,12 @@ import {
   StyleSheet,
   Text,
   StatusBar,
+  Dimensions,Image
 } from "react-native";
 import { TouchableOpacity } from "react-native-gesture-handler";
+
+var width = Dimensions.get("window").width; //full width
+var height = Dimensions.get("window").height; //full height
 
 const DATA = [
   {
@@ -32,11 +36,34 @@ const DATA = [
   },
 ];
 
-const AssignmentInfo = ({ navigation }) => {
-  return (
+const AssignmentInfo = ({ navigation, route }) => {
+
+  const data = route.params;
+
+  console.log(data)
+    return (
     <View>
+
+    
+    <View
+            style={[
+              StyleSheet.absoluteFillObject,
+              { marginTop: 0, height: height * 0.5 },
+            ]}
+          >
+            <Image
+              style={{ flex: 1 }}
+              source={{
+                uri: data.uri,
+              }}
+            />
+          </View>
+          <Text style={styles.name}>{data.courseId}</Text>
+          <Text style={styles.name}>{data.courseName}</Text>
+          <Text style={styles.term}>{data.term}</Text>
+
       <FlatList
-        style={{ marginTop: 20 }}
+        style={{transform: [{ translateY: height*0.3 }]}}
         data={DATA}
         keyExtractor={(item) => item.id}
         renderItem={({ item }) => (
@@ -69,5 +96,24 @@ const styles = StyleSheet.create({
   title: {
     fontSize: 16,
     color: "grey",
+  },
+  name: {
+    
+    fontSize: 42,
+
+    textAlign: "center",
+
+    top: height * 0.25,
+
+    fontWeight: "700",
+    marginLeft: 10,
+
+    color: "#FFF",
+    letterSpacing: 2,
+  },
+  term: {
+    fontSize: 22,
+    marginTop: 50,
+    textAlign: "center",
   },
 });

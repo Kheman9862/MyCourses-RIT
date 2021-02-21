@@ -21,6 +21,7 @@ const CourseContent = ({ navigation }) => {
   const user = useSelector((state) => state.auth.user);
   const profile = useSelector((state) => state.profile.profile);
   const loading = useSelector((state) => state.course.loading);
+  
 
   const dispatch = useDispatch();
   useEffect(() => {
@@ -59,6 +60,9 @@ const CourseContent = ({ navigation }) => {
                     384,0,288,0C192,0,96,0,48,0L0,0Z"
           />
         </Svg>
+        <View style={{ position: "absolute", right: 0, top: 40 }}>
+          <Logout />
+        </View>
       </View>
       <SafeAreaView style={styles.container}>
         <Text
@@ -71,7 +75,7 @@ const CourseContent = ({ navigation }) => {
             paddingLeft: 20,
           }}
         >
-          Hello {profile.firstname}!
+          Hello!
         </Text>
 
         {loading ? (
@@ -146,7 +150,7 @@ export default CourseContent;
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    marginTop: Dimensions.get("screen").height * 0.06,
+    marginTop: Dimensions.get("screen").height * 0.1,
   },
   bg: {
     position: "absolute",
