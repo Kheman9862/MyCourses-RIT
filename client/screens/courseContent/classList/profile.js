@@ -6,24 +6,20 @@ import {
   SafeAreaView,
   Image,
   ScrollView,
+  Linking,
 } from "react-native";
 import { Ionicons, MaterialIcons } from "@expo/vector-icons";
-const fb = "www.fb.com";
-const twit = "www.twitter.com";
-const link = "www.linkedin.com";
-const personal = "www.google.com";
-
-const profile = function App(props) {
+import { OpenURLButton } from "../../messaging/openUrl";
+const profile = function App({ navigation, route }) {
+  const profile = route.params.item;
   return (
     <SafeAreaView style={styles.container}>
       <ScrollView showsVerticalScrollIndicator={false}>
         {/* Back Arrow and question mark Icons can be removed if not needed  */}
+
         <View style={{ alignSelf: "center", marginTop: 25 }}>
           <View style={styles.profileImage}>
-            <Image
-              source={require("../../assets/avatar.jpeg")}
-              style={styles.image}
-            />
+            <Image source={{ uri: profile.profile_pic }} style={styles.image} />
           </View>
           {/* Chat Icon to use for mailing if intended */}
           <View style={styles.dm}>
@@ -50,30 +46,36 @@ const profile = function App(props) {
           <Text
             style={[
               styles.text,
-              { fontWeight: "200", fontSize: 24, color: "#F76902" },
+              { fontWeight: "700", fontSize: 24, color: "#777" },
             ]}
           >
-            First Name Last Name
+            {profile.firstname} {profile.lastname}
           </Text>
           <Text
             style={[
               styles.text,
-              { color: "#AEB5BC", fontWeight: "200", fontSize: 14 },
+              { color: "#777", fontWeight: "200", fontSize: 14 },
             ]}
           >
-            @Username
+            {profile.username}
           </Text>
         </View>
-
+        <View
+          style={{ flex: 1, alignItems: "center", justifyContent: "center" }}
+        >
+          <OpenURLButton url={`mailto:${profile.email}?`}>Email</OpenURLButton>
+        </View>
         <View style={styles.statsContainer}>
           <View style={styles.statsBox}>
-            {fb.length > 1 ? (
-              <Ionicons
-                name="logo-facebook"
-                size={36}
-                color="#1877f2"
-                style={{ marginBottom: 0, marginLeft: 0 }}
-              ></Ionicons>
+            {profile.facebook ? (
+              <Text onPress={() => Linking.openURL(profile.facebook)}>
+                <Ionicons
+                  name="logo-facebook"
+                  size={36}
+                  color="#1877f2"
+                  style={{ marginBottom: 0, marginLeft: 0 }}
+                ></Ionicons>
+              </Text>
             ) : (
               <Ionicons
                 name="logo-facebook"
@@ -93,13 +95,15 @@ const profile = function App(props) {
               },
             ]}
           >
-            {twit.length > 1 ? (
-              <Ionicons
-                name="logo-twitter"
-                size={36}
-                color="#00acee"
-                style={{ marginBottom: 0, marginLeft: 0 }}
-              ></Ionicons>
+            {profile.twitter ? (
+              <Text onPress={() => Linking.openURL(profile.twitter)}>
+                <Ionicons
+                  name="logo-twitter"
+                  size={36}
+                  color="#00acee"
+                  style={{ marginBottom: 0, marginLeft: 0 }}
+                ></Ionicons>
+              </Text>
             ) : (
               <Ionicons
                 name="logo-twitter"
@@ -119,13 +123,15 @@ const profile = function App(props) {
               },
             ]}
           >
-            {link.length > 1 ? (
-              <Ionicons
-                name="logo-linkedin"
-                size={36}
-                color="#0e76a8"
-                style={{ marginBottom: 0, marginLeft: 0 }}
-              ></Ionicons>
+            {profile.linkedin ? (
+              <Text onPress={() => Linking.openURL(profile.linkedin)}>
+                <Ionicons
+                  name="logo-linkedin"
+                  size={36}
+                  color="#0e76a8"
+                  style={{ marginBottom: 0, marginLeft: 0 }}
+                ></Ionicons>
+              </Text>
             ) : (
               <Ionicons
                 name="logo-linkedin"
@@ -136,13 +142,15 @@ const profile = function App(props) {
             )}
           </View>
           <View style={styles.statsBox}>
-            {personal.length > 1 ? (
-              <Ionicons
-                name="desktop"
-                size={36}
-                color="#1687a7"
-                style={{ marginBottom: 0, marginLeft: 0 }}
-              ></Ionicons>
+            {profile.personal_website ? (
+              <Text onPress={() => Linking.openURL(profile.personal_website)}>
+                <Ionicons
+                  name="desktop"
+                  size={36}
+                  color="#1687a7"
+                  style={{ marginBottom: 0, marginLeft: 0 }}
+                ></Ionicons>
+              </Text>
             ) : (
               <Ionicons
                 name="desktop"
@@ -154,15 +162,19 @@ const profile = function App(props) {
           </View>
         </View>
 
-        <Text style={[styles.subText, styles.recent]}>User Details</Text>
-        <View style={{ alignItems: "center" }}>
+        {/* <Text style={[styles.subText, styles.recent]}>User Details</Text> */}
+        <View style={{ alignSelf: "center", paddingLeft: 25, paddingTop: 20 }}>
           <View style={(styles.recentItem, { width: 350 })}>
             <View style={[styles.text]}>
-              <Text style={{ fontWeight: "200", color: "#AEB5BC" }}>
-                NICKNAME
-              </Text>
-              <Text style={{ fontWeight: "100", fontSize: 18, color: "#000" }}>
-                Student
+              <Text style={{ fontWeight: "200" }}>NICKNAME</Text>
+              <Text
+                style={{
+                  fontWeight: "100",
+                  fontSize: 18,
+                  color: "#AEB5BC",
+                }}
+              >
+                {profile.nickname}
               </Text>
             </View>
           </View>
@@ -170,9 +182,13 @@ const profile = function App(props) {
             <View style={[styles.text]}>
               <Text style={{ fontWeight: "200" }}>HOMETOWN</Text>
               <Text
-                style={{ fontWeight: "100", fontSize: 18, color: "#F76902" }}
+                style={{
+                  fontWeight: "100",
+                  fontSize: 18,
+                  color: "#AEB5BC",
+                }}
               >
-                Bhilai
+                {profile.hometown}
               </Text>
             </View>
           </View>
@@ -180,29 +196,13 @@ const profile = function App(props) {
             <View style={[styles.text]}>
               <Text style={{ fontWeight: "200" }}>EMAIL</Text>
               <Text
-                style={{ fontWeight: "100", fontSize: 18, color: "#F76902" }}
+                style={{
+                  fontWeight: "100",
+                  fontSize: 18,
+                  color: "#AEB5BC",
+                }}
               >
-                aa7120@rit.edu
-              </Text>
-            </View>
-          </View>
-          <View style={(styles.recentItem, { width: 350 })}>
-            <View style={[styles.text]}>
-              <Text style={{ fontWeight: "200" }}>ADDRESS 1</Text>
-              <Text
-                style={{ fontWeight: "100", fontSize: 18, color: "#F76902" }}
-              >
-                250 East Squire Dr.
-              </Text>
-            </View>
-          </View>
-          <View style={(styles.recentItem, { width: 350 })}>
-            <View style={[styles.text]}>
-              <Text style={{ fontWeight: "200" }}>ADDRESS 2</Text>
-              <Text
-                style={{ fontWeight: "100", fontSize: 18, color: "#F76902" }}
-              >
-                APT 5
+                {profile.email}
               </Text>
             </View>
           </View>
@@ -210,9 +210,13 @@ const profile = function App(props) {
             <View style={[styles.text]}>
               <Text style={{ fontWeight: "200" }}>CITY</Text>
               <Text
-                style={{ fontWeight: "100", fontSize: 18, color: "#F76902" }}
+                style={{
+                  fontWeight: "100",
+                  fontSize: 18,
+                  color: "#AEB5BC",
+                }}
               >
-                Rochester
+                {profile.city}
               </Text>
             </View>
           </View>
@@ -220,9 +224,13 @@ const profile = function App(props) {
             <View style={[styles.text]}>
               <Text style={{ fontWeight: "200" }}>STATE</Text>
               <Text
-                style={{ fontWeight: "100", fontSize: 18, color: "#F76902" }}
+                style={{
+                  fontWeight: "100",
+                  fontSize: 18,
+                  color: "#AEB5BC",
+                }}
               >
-                NY
+                {profile.state}
               </Text>
             </View>
           </View>
@@ -232,9 +240,13 @@ const profile = function App(props) {
                 PINCODE
               </Text>
               <Text
-                style={{ fontWeight: "100", fontSize: 18, color: "#F76902" }}
+                style={{
+                  fontWeight: "100",
+                  fontSize: 18,
+                  color: "#AEB5BC",
+                }}
               >
-                14623
+                {profile.pincode}
               </Text>
             </View>
           </View>
@@ -242,9 +254,13 @@ const profile = function App(props) {
             <View style={[styles.text]}>
               <Text style={{ fontWeight: "200" }}>COUNTRY</Text>
               <Text
-                style={{ fontWeight: "100", fontSize: 18, color: "#F76902" }}
+                style={{
+                  fontWeight: "100",
+                  fontSize: 18,
+                  color: "#AEB5BC",
+                }}
               >
-                USA
+                {profile.country}
               </Text>
             </View>
           </View>

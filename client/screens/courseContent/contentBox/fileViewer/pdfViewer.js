@@ -3,7 +3,7 @@ import { StyleSheet, Text, View, Dimensions } from "react-native";
 import PDFReader from "rn-pdf-reader-js";
 
 const PdfViewer = ({ navigation, route }) => {
-  //data = route.params.action
+  data = route.params.action;
   return (
     <View style={{ flex: 1 }}>
       <PDFReader
@@ -12,8 +12,7 @@ const PdfViewer = ({ navigation, route }) => {
           width: Dimensions.get("screen").width,
         }}
         source={{
-          uri:
-            "https://vrishabhparmar.netlify.app/resume/Vrishabh_Parmar_Resume.pdf",
+          uri: data,
         }}
       />
     </View>

@@ -1,9 +1,13 @@
-import { GET_CONTENT,CONTENT_LOADING, ADD_CONTENT_ID } from "../actions/courseContentAction";
+import {
+  GET_CONTENT,
+  CONTENT_LOADING,
+  ADD_CONTENT_ID,
+} from "../actions/courseContentAction";
 
 const initialState = {
   content: {},
   loading: true,
-  contentID:null
+  contentID: null,
 };
 
 export default (state = initialState, action) => {
@@ -19,11 +23,11 @@ export default (state = initialState, action) => {
         ...state,
         loading: true,
       };
-    case ADD_CONTENT_ID:{
-      return{
+    case ADD_CONTENT_ID: {
+      return {
         ...state,
-        contentID:action.payload
-      }
+        contentID: action.payload,
+      };
     }
     default:
       return state;

@@ -10,6 +10,8 @@ import CredentialNavigation from "./navigation/credentialNavigation";
 import keys from "./utils/keys";
 import courseReducer from "./store/reducers/courseReducer";
 import courseContentReducer from "./store/reducers/courseContentReducer";
+import weekReducer from "./store/reducers/weekReducer";
+import classListReducer from "./store/reducers/classListReducer";
 
 axios.defaults.baseURL = keys.baseURL;
 
@@ -18,7 +20,9 @@ const rootReducer = combineReducers({
   splash: splashReducer,
   profile: profileReducer,
   course: courseReducer,
-  content:courseContentReducer
+  content: courseContentReducer,
+  week: weekReducer,
+  classlist: classListReducer,
 });
 
 const store = createStore(rootReducer, applyMiddleware(ReduxThunk));

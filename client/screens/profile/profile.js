@@ -13,6 +13,9 @@ import { Ionicons, MaterialIcons } from "@expo/vector-icons";
 import { useDispatch, useSelector } from "react-redux";
 import * as profileActions from "../../store/actions/profileAction";
 import Colors from "../../UI/Colors";
+import { Dimensions } from "react-native";
+import Svg, { Path } from "react-native-svg";
+import Logout from "../login/logout";
 
 const profile = function App(props) {
   const dispatch = useDispatch();
@@ -26,266 +29,324 @@ const profile = function App(props) {
   }, [dispatch]);
 
   const profile = useSelector((state) => state.profile.profile);
+
   return (
-    <SafeAreaView style={styles.container}>
-      {loading ? (
-        <ActivityIndicator size="large" color={Colors.primary} />
-      ) : (
-        <ScrollView showsVerticalScrollIndicator={false}>
-          {/* Back Arrow and question mark Icons can be removed if not needed  */}
+    <>
+      <View
+        style={{
+          height: 100,
+          width: "100%",
+          borderColor: "#f76902",
+          backgroundColor: "#f76902",
+          marginVertical: 0,
+          borderBottomWidth: 10,
+        }}
+      >
+        <Svg
+          height={Dimensions.get("screen").height}
+          width="100%"
+          viewBox="50 70 1340 185"
+          style={{ position: "absolute", top: 0, margin: 0 }}
+        >
+          <Path
+            fill="#f76902"
+            d="M0,96L48,112C96,128,192,160,288,186.7C384
+                    ,213,480,235,576,213.3C672,192,768,128,864,
+                    128C960,128,1056,192,1152,208C1248,224,1344,192,
+                    1392,176L1440,160L1440,0L1392,0C1344,0,1248,0,
+                    1152,0C1056,0,960,0,864,0C768,0,672,0,576,0C480,0,
+                    384,0,288,0C192,0,96,0,48,0L0,0Z"
+          />
+        </Svg>
+        <View style={{ position: "absolute", right: 0, top: 40 }}>
+          <Logout />
+        </View>
+      </View>
+      <SafeAreaView style={styles.container}>
+        {loading ? (
+          <ActivityIndicator size="large" color={Colors.primary} />
+        ) : (
+          <View>
+            <ScrollView showsVerticalScrollIndicator={false}>
+              {/* Back Arrow and question mark Icons can be removed if not needed  */}
 
-          <View style={{ alignSelf: "center", marginTop: 25 }}>
-            <View style={styles.profileImage}>
-              <Image
-                source={{ uri: profile.profile_pic }}
-                style={styles.image}
-              />
-            </View>
-            {/* Chat Icon to use for mailing if intended */}
-            <View style={styles.dm}>
-              <MaterialIcons
-                name="chat"
-                size={18}
-                color="#D0D3D4"
-              ></MaterialIcons>
-            </View>
-            {/* Active Icon to show if a user is active or not can be just placed here without functionality */}
-            <View style={styles.active}></View>
-            {/* Camera-Reverse Icon can be used to change*/}
-            <View style={styles.add}>
-              <Ionicons
-                name="camera-reverse"
-                size={36}
-                color="#D0D3D4"
-                style={{ marginTop: 0, marginLeft: 1 }}
-              ></Ionicons>
-            </View>
-          </View>
+              <View style={{ alignSelf: "center", marginTop: 30 }}>
+                <View style={styles.profileImage}>
+                  <Image
+                    source={{ uri: profile.profile_pic }}
+                    style={styles.image}
+                  />
+                </View>
+              </View>
 
-          <View style={styles.infoContainer}>
-            <Text
-              style={[
-                styles.text,
-                { fontWeight: "200", fontSize: 24, color: "#F76902" },
-              ]}
-            >
-              {profile.firstname} {profile.lastname}
-            </Text>
-            <Text
-              style={[
-                styles.text,
-                { color: "#AEB5BC", fontWeight: "200", fontSize: 14 },
-              ]}
-            >
-              {profile.user.username}
-            </Text>
-          </View>
+              <View style={styles.infoContainer}>
+                <Text
+                  style={[
+                    styles.text,
+                    { fontWeight: "700", fontSize: 24, color: "#777" },
+                  ]}
+                >
+                  {profile.firstname} {profile.lastname}
+                </Text>
+                <Text
+                  style={[
+                    styles.text,
+                    { color: "#777", fontWeight: "200", fontSize: 14 },
+                  ]}
+                >
+                  {profile.user.username}
+                </Text>
+              </View>
 
-          <View style={styles.statsContainer}>
-            <View style={styles.statsBox}>
-              {profile.facebook ? (
-                <Text onPress={() => Linking.openURL(profile.facebook)}>
-                  <Ionicons
-                    name="logo-facebook"
-                    size={36}
-                    color="#1877f2"
-                    style={{ marginBottom: 0, marginLeft: 0 }}
-                  ></Ionicons>
-                </Text>
-              ) : (
-                <Ionicons
-                  name="logo-facebook"
-                  size={36}
-                  color="#AEB5BC"
-                  style={{ marginBottom: 0, marginLeft: 0 }}
-                ></Ionicons>
-              )}
-            </View>
-            <View
-              style={[
-                styles.statsBox,
-                {
-                  borderColor: "#DFD8C8",
-                  borderLeftWidth: 1,
-                  borderRightWidth: 1,
-                },
-              ]}
-            >
-              {profile.twitter ? (
-                <Text onPress={() => Linking.openURL(profile.twitter)}>
-                  <Ionicons
-                    name="logo-twitter"
-                    size={36}
-                    color="#00acee"
-                    style={{ marginBottom: 0, marginLeft: 0 }}
-                  ></Ionicons>
-                </Text>
-              ) : (
-                <Ionicons
-                  name="logo-twitter"
-                  size={36}
-                  color="#AEB5BC"
-                  style={{ marginBottom: 0, marginLeft: 0 }}
-                ></Ionicons>
-              )}
-            </View>
-            <View
-              style={[
-                styles.statsBox,
-                {
-                  borderColor: "#DFD8C8",
-                  borderLeftWidth: 1,
-                  borderRightWidth: 1,
-                },
-              ]}
-            >
-              {profile.linkedin ? (
-                <Text onPress={() => Linking.openURL(profile.linkedin)}>
-                  <Ionicons
-                    name="logo-linkedin"
-                    size={36}
-                    color="#0e76a8"
-                    style={{ marginBottom: 0, marginLeft: 0 }}
-                  ></Ionicons>
-                </Text>
-              ) : (
-                <Ionicons
-                  name="logo-linkedin"
-                  size={36}
-                  color="#AEB5BC"
-                  style={{ marginBottom: 0, marginLeft: 0 }}
-                ></Ionicons>
-              )}
-            </View>
-            <View style={styles.statsBox}>
-              {profile.personal_website ? (
-                <Text onPress={() => Linking.openURL(profile.personal_website)}>
-                  <Ionicons
-                    name="desktop"
-                    size={36}
-                    color="#1687a7"
-                    style={{ marginBottom: 0, marginLeft: 0 }}
-                  ></Ionicons>
-                </Text>
-              ) : (
-                <Ionicons
-                  name="desktop"
-                  size={36}
-                  color="#AEB5BC"
-                  style={{ marginBottom: 0, marginLeft: 0 }}
-                ></Ionicons>
-              )}
-            </View>
-          </View>
+              <View style={styles.statsContainer}>
+                <View style={styles.statsBox}>
+                  {profile.facebook ? (
+                    <Text onPress={() => Linking.openURL(profile.facebook)}>
+                      <Ionicons
+                        name="logo-facebook"
+                        size={36}
+                        color="#1877f2"
+                        style={{ marginBottom: 0, marginLeft: 0 }}
+                      ></Ionicons>
+                    </Text>
+                  ) : (
+                    <Ionicons
+                      name="logo-facebook"
+                      size={36}
+                      color="#AEB5BC"
+                      style={{ marginBottom: 0, marginLeft: 0 }}
+                    ></Ionicons>
+                  )}
+                </View>
+                <View
+                  style={[
+                    styles.statsBox,
+                    {
+                      borderColor: "#DFD8C8",
+                      borderLeftWidth: 1,
+                      borderRightWidth: 1,
+                    },
+                  ]}
+                >
+                  {profile.twitter ? (
+                    <Text onPress={() => Linking.openURL(profile.twitter)}>
+                      <Ionicons
+                        name="logo-twitter"
+                        size={36}
+                        color="#00acee"
+                        style={{ marginBottom: 0, marginLeft: 0 }}
+                      ></Ionicons>
+                    </Text>
+                  ) : (
+                    <Ionicons
+                      name="logo-twitter"
+                      size={36}
+                      color="#AEB5BC"
+                      style={{ marginBottom: 0, marginLeft: 0 }}
+                    ></Ionicons>
+                  )}
+                </View>
+                <View
+                  style={[
+                    styles.statsBox,
+                    {
+                      borderColor: "#DFD8C8",
+                      borderLeftWidth: 1,
+                      borderRightWidth: 1,
+                    },
+                  ]}
+                >
+                  {profile.linkedin ? (
+                    <Text onPress={() => Linking.openURL(profile.linkedin)}>
+                      <Ionicons
+                        name="logo-linkedin"
+                        size={36}
+                        color="#0e76a8"
+                        style={{ marginBottom: 0, marginLeft: 0 }}
+                      ></Ionicons>
+                    </Text>
+                  ) : (
+                    <Ionicons
+                      name="logo-linkedin"
+                      size={36}
+                      color="#AEB5BC"
+                      style={{ marginBottom: 0, marginLeft: 0 }}
+                    ></Ionicons>
+                  )}
+                </View>
+                <View style={styles.statsBox}>
+                  {profile.personal_website ? (
+                    <Text
+                      onPress={() => Linking.openURL(profile.personal_website)}
+                    >
+                      <Ionicons
+                        name="desktop"
+                        size={36}
+                        color="#1687a7"
+                        style={{ marginBottom: 0, marginLeft: 0 }}
+                      ></Ionicons>
+                    </Text>
+                  ) : (
+                    <Ionicons
+                      name="desktop"
+                      size={36}
+                      color="#AEB5BC"
+                      style={{ marginBottom: 0, marginLeft: 0 }}
+                    ></Ionicons>
+                  )}
+                </View>
+              </View>
 
-          <Text style={[styles.subText, styles.recent]}>User Details</Text>
-          <View style={{ alignItems: "center" }}>
-            <View style={(styles.recentItem, { width: 350 })}>
-              <View style={[styles.text]}>
-                <Text style={{ fontWeight: "200" }}>NICKNAME</Text>
-                <Text
-                  style={{ fontWeight: "100", fontSize: 18, color: "#F76902" }}
-                >
-                  {profile.nickname}
-                </Text>
+              {/* <Text style={[styles.subText, styles.recent]}>User Details</Text> */}
+              <View
+                style={{ alignSelf: "center", paddingLeft: 25, paddingTop: 20 }}
+              >
+                <View style={(styles.recentItem, { width: 350 })}>
+                  <View style={[styles.text]}>
+                    <Text style={{ fontWeight: "200" }}>NICKNAME</Text>
+                    <Text
+                      style={{
+                        fontWeight: "100",
+                        fontSize: 18,
+                        color: "#AEB5BC",
+                      }}
+                    >
+                      {profile.nickname}
+                    </Text>
+                  </View>
+                </View>
+                <View style={(styles.recentItem.alignItems, { width: 350 })}>
+                  <View style={[styles.text]}>
+                    <Text style={{ fontWeight: "200" }}>HOMETOWN</Text>
+                    <Text
+                      style={{
+                        fontWeight: "100",
+                        fontSize: 18,
+                        color: "#AEB5BC",
+                      }}
+                    >
+                      {profile.hometown}
+                    </Text>
+                  </View>
+                </View>
+                <View style={(styles.recentItem, { width: 350 })}>
+                  <View style={[styles.text]}>
+                    <Text style={{ fontWeight: "200" }}>EMAIL</Text>
+                    <Text
+                      style={{
+                        fontWeight: "100",
+                        fontSize: 18,
+                        color: "#AEB5BC",
+                      }}
+                    >
+                      {profile.user.email}
+                    </Text>
+                  </View>
+                </View>
+                <View style={(styles.recentItem, { width: 350 })}>
+                  <View style={[styles.text]}>
+                    <Text style={{ fontWeight: "200" }}>ADDRESS 1</Text>
+                    <Text
+                      style={{
+                        fontWeight: "100",
+                        fontSize: 18,
+                        color: "#AEB5BC",
+                      }}
+                    >
+                      {profile.address1}
+                    </Text>
+                  </View>
+                </View>
+                <View style={(styles.recentItem, { width: 350 })}>
+                  <View style={[styles.text]}>
+                    <Text style={{ fontWeight: "200" }}>ADDRESS 2</Text>
+                    <Text
+                      style={{
+                        fontWeight: "100",
+                        fontSize: 18,
+                        color: "#AEB5BC",
+                      }}
+                    >
+                      {profile.address2}
+                    </Text>
+                  </View>
+                </View>
+                <View style={(styles.recentItem, { width: 350 })}>
+                  <View style={[styles.text]}>
+                    <Text style={{ fontWeight: "200" }}>CITY</Text>
+                    <Text
+                      style={{
+                        fontWeight: "100",
+                        fontSize: 18,
+                        color: "#AEB5BC",
+                      }}
+                    >
+                      {profile.city}
+                    </Text>
+                  </View>
+                </View>
+                <View style={(styles.recentItem, { width: 350 })}>
+                  <View style={[styles.text]}>
+                    <Text style={{ fontWeight: "200" }}>STATE</Text>
+                    <Text
+                      style={{
+                        fontWeight: "100",
+                        fontSize: 18,
+                        color: "#AEB5BC",
+                      }}
+                    >
+                      {profile.state}
+                    </Text>
+                  </View>
+                </View>
+                <View style={(styles.recentItem, { width: 350 })}>
+                  <View style={[styles.text]}>
+                    <Text style={{ fontWeight: "200", color: "#000000" }}>
+                      PINCODE
+                    </Text>
+                    <Text
+                      style={{
+                        fontWeight: "100",
+                        fontSize: 18,
+                        color: "#AEB5BC",
+                      }}
+                    >
+                      {profile.pincode}
+                    </Text>
+                  </View>
+                </View>
+                <View style={(styles.recentItem, { width: 350 })}>
+                  <View style={[styles.text]}>
+                    <Text style={{ fontWeight: "200" }}>COUNTRY</Text>
+                    <Text
+                      style={{
+                        fontWeight: "100",
+                        fontSize: 18,
+                        color: "#AEB5BC",
+                      }}
+                    >
+                      {profile.country}
+                    </Text>
+                  </View>
+                </View>
               </View>
-            </View>
-            <View style={(styles.recentItem.alignItems, { width: 350 })}>
-              <View style={[styles.text]}>
-                <Text style={{ fontWeight: "200" }}>HOMETOWN</Text>
-                <Text
-                  style={{ fontWeight: "100", fontSize: 18, color: "#F76902" }}
-                >
-                  {profile.hometown}
-                </Text>
-              </View>
-            </View>
-            <View style={(styles.recentItem, { width: 350 })}>
-              <View style={[styles.text]}>
-                <Text style={{ fontWeight: "200" }}>EMAIL</Text>
-                <Text
-                  style={{ fontWeight: "100", fontSize: 18, color: "#F76902" }}
-                >
-                  {profile.user.email}
-                </Text>
-              </View>
-            </View>
-            <View style={(styles.recentItem, { width: 350 })}>
-              <View style={[styles.text]}>
-                <Text style={{ fontWeight: "200" }}>ADDRESS 1</Text>
-                <Text
-                  style={{ fontWeight: "100", fontSize: 18, color: "#F76902" }}
-                >
-                  {profile.address1}
-                </Text>
-              </View>
-            </View>
-            <View style={(styles.recentItem, { width: 350 })}>
-              <View style={[styles.text]}>
-                <Text style={{ fontWeight: "200" }}>ADDRESS 2</Text>
-                <Text
-                  style={{ fontWeight: "100", fontSize: 18, color: "#F76902" }}
-                >
-                  {profile.address2}
-                </Text>
-              </View>
-            </View>
-            <View style={(styles.recentItem, { width: 350 })}>
-              <View style={[styles.text]}>
-                <Text style={{ fontWeight: "200" }}>CITY</Text>
-                <Text
-                  style={{ fontWeight: "100", fontSize: 18, color: "#F76902" }}
-                >
-                  {profile.city}
-                </Text>
-              </View>
-            </View>
-            <View style={(styles.recentItem, { width: 350 })}>
-              <View style={[styles.text]}>
-                <Text style={{ fontWeight: "200" }}>STATE</Text>
-                <Text
-                  style={{ fontWeight: "100", fontSize: 18, color: "#F76902" }}
-                >
-                  {profile.state}
-                </Text>
-              </View>
-            </View>
-            <View style={(styles.recentItem, { width: 350 })}>
-              <View style={[styles.text]}>
-                <Text style={{ fontWeight: "200", color: "#000000" }}>
-                  PINCODE
-                </Text>
-                <Text
-                  style={{ fontWeight: "100", fontSize: 18, color: "#F76902" }}
-                >
-                  {profile.pincode}
-                </Text>
-              </View>
-            </View>
-            <View style={(styles.recentItem, { width: 350 })}>
-              <View style={[styles.text]}>
-                <Text style={{ fontWeight: "200" }}>COUNTRY</Text>
-                <Text
-                  style={{ fontWeight: "100", fontSize: 18, color: "#F76902" }}
-                >
-                  {profile.country}
-                </Text>
-              </View>
-            </View>
+            </ScrollView>
           </View>
-        </ScrollView>
-      )}
-    </SafeAreaView>
+        )}
+      </SafeAreaView>
+    </>
   );
 };
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: "#FFF",
+
     justifyContent: "center",
     alignItems: "center",
-    marginVertical: 30,
+    marginTop: Dimensions.get("screen").height * 0.03,
+    width: Dimensions.get("screen").width,
+    height: Dimensions.get("screen").height,
   },
   text: {
     fontFamily: "Roboto",

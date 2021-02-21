@@ -7,7 +7,7 @@ export const CONTENT_LOADING = "CONTENT_LOADING";
 export const ADD_CONTENT_ID = "ADD_CONTENT_ID";
 
 // Get Courses
-export const getContent = (userID,courseID) => (dispatch) => {
+export const getContent = (userID, courseID) => (dispatch) => {
   dispatch(setContentLoading());
   axios
     .get(`/api/user/${userID}/courses/${courseID}`)
@@ -32,10 +32,9 @@ export const setContentLoading = () => {
   };
 };
 
-
-export const addContentID=(contentID)=>{
-  return{
-    type:ADD_CONTENT_ID,
-    payload:contentID
-  }
-}
+export const addContentID = (contentID) => {
+  return {
+    type: ADD_CONTENT_ID,
+    payload: contentID,
+  };
+};

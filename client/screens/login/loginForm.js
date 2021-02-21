@@ -1,14 +1,17 @@
 import React from "react";
 import { useState } from "react";
+import { Dimensions } from "react-native";
 import {
   Text,
   View,
   TextInput,
   StyleSheet,
   TouchableOpacity,
+  Image,
 } from "react-native";
 import { useDispatch } from "react-redux";
 import * as authActions from "../../store/actions/auth";
+import { MaterialCommunityIcons } from "@expo/vector-icons";
 
 const LoginForm = (props) => {
   const [error, setError] = useState();
@@ -32,22 +35,55 @@ const LoginForm = (props) => {
   };
 
   return (
-    <View>
+    <View style={styles.container}>
       {error ? <Text>{error}</Text> : <Text></Text>}
-      <View style={styles.container}>
-        {/* <Text style={styles.welcome}>Login</Text> */}
-        <TextInput
-          style={styles.input}
-          placeholder="Username"
-          onChangeText={(email) => setEmail(email)}
-        />
+      <View style={{ flex: 1, justifyContent: "center" }}>
+        <Text
+          style={{
+            textAlign: "left",
+            fontSize: 32,
+            marginBottom: 10,
+            fontWeight: "700",
+            color: "#777",
+          }}
+        >
+          Login
+        </Text>
 
-        <TextInput
-          style={styles.input}
-          placeholder="Password"
-          secureTextEntry={true}
-          onChangeText={(password) => setPassword(password)}
-        />
+        <View style={{}}>
+          <MaterialCommunityIcons
+            name="email"
+            size={24}
+            color="#777"
+            style={{ position: "absolute", right: 5, bottom: 25 }}
+          />
+
+          <TextInput
+            style={styles.input}
+            placeholder="Enter Email"
+            onChangeText={(email) => setEmail(email)}
+            inlineImageLeft="username"
+            inlineImagePadding={2}
+            underlineColorAndroid="transparent"
+          />
+        </View>
+
+        <View>
+          <MaterialCommunityIcons
+            name="form-textbox-password"
+            size={24}
+            color="#777"
+            style={{ position: "absolute", right: 5, bottom: 25 }}
+          />
+
+          <TextInput
+            style={styles.input}
+            placeholder="Enter Password"
+            secureTextEntry={true}
+            onChangeText={(password) => setPassword(password)}
+            underlineColorAndroid="transparent"
+          />
+        </View>
 
         <TouchableOpacity
           style={styles.buttonContainer}
@@ -58,10 +94,12 @@ const LoginForm = (props) => {
         </TouchableOpacity>
 
         <TouchableOpacity
-          style={styles.buttonContainer}
+          style={{ color: "red" }}
           onPress={() => props.navigation.navigate("Register")}
         >
-          <Text style={styles.buttonText}>SIGN UP</Text>
+          <Text style={{ textAlign: "center", color: "#f76902" }}>
+            Not a User ? Register here{" "}
+          </Text>
         </TouchableOpacity>
       </View>
     </View>
@@ -70,7 +108,10 @@ const LoginForm = (props) => {
 
 const styles = StyleSheet.create({
   container: {
-    padding: 30,
+    flex: 1,
+    justifyContent: "center",
+    alignSelf: "center",
+    width: Dimensions.get("window").width * 0.85,
   },
   welcome: {
     fontSize: 30,
@@ -80,35 +121,23 @@ const styles = StyleSheet.create({
   },
   input: {
     height: 40,
-    backgroundColor: "lightgrey",
+    backgroundColor: "transparent",
     marginBottom: 20,
-    color: "#FFF",
+    color: "#777",
     paddingHorizontal: 10,
-    borderRadius: 30,
+    borderRadius: 0,
     shadowColor: "#000",
-    shadowOffset: {
-      width: 0,
-      height: 4,
-    },
-    shadowOpacity: 0.32,
-    shadowRadius: 5.46,
-
-    elevation: 9,
+    borderBottomColor: "#777",
+    borderBottomWidth: 2,
+    fontSize: 16,
   },
   buttonContainer: {
+    width: Dimensions.get("screen").width * 0.7,
     backgroundColor: "#f76902",
     paddingVertical: 15,
     borderRadius: 30,
     marginBottom: 15,
-    shadowColor: "#000",
-    shadowOffset: {
-      width: 0,
-      height: 4,
-    },
-    shadowOpacity: 0.32,
-    shadowRadius: 5.46,
-
-    elevation: 9,
+    alignSelf: "center",
   },
   buttonText: {
     textAlign: "center",

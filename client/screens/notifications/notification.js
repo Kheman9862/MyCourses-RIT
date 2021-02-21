@@ -1,29 +1,11 @@
-import React, { useCallback } from "react";
-import { Text, Alert, Button, Linking, StyleSheet, View } from "react-native";
-const supportedURL = "mailto:poke@me.com?";
-
-const OpenURLButton = ({ url, children }) => {
-  const handlePress = useCallback(async () => {
-    // Checking if the link is supported for links with custom URL scheme.
-    const supported = await Linking.canOpenURL(url);
-
-    if (supported) {
-      // Opening the link with some app, if the URL scheme is "http" the web link should be opened
-      // by some browser in the mobile
-      await Linking.openURL(url);
-    } else {
-      Alert.alert(`Don't know how to open this URL: ${url}`);
-    }
-  }, [url]);
-
-  return <Button title={children} onPress={handlePress} />;
-};
+import React from "react";
+import { View, Text } from "react-native";
 
 import { Dimensions } from "react-native";
 import Svg, { Path } from "react-native-svg";
 import Logout from "../login/logout";
 
-const messaging = (props) => {
+const notification = (props) => {
   return (
     <>
       <View
@@ -57,10 +39,10 @@ const messaging = (props) => {
         </View>
       </View>
       <View style={{ flex: 1, alignItems: "center", justifyContent: "center" }}>
-        <OpenURLButton url={supportedURL}>Poke Me!!</OpenURLButton>
+        <Text>This is notification</Text>
       </View>
     </>
   );
 };
 
-export default messaging;
+export default notification;
