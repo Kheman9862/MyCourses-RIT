@@ -5,14 +5,16 @@ import {
   StyleSheet,
   TextInput,
   TouchableOpacity,
-  Dimensions,
+  Dimensions
 } from "react-native";
 import Svg, { Path } from "react-native-svg";
 import { useDispatch } from "react-redux";
 import * as authActions from "../../store/actions/auth";
-import { AntDesign } from "@expo/vector-icons";
-import { MaterialIcons } from "@expo/vector-icons";
-import { MaterialCommunityIcons } from "@expo/vector-icons";
+import { AntDesign } from '@expo/vector-icons';
+import { MaterialIcons } from '@expo/vector-icons';
+import { MaterialCommunityIcons } from '@expo/vector-icons';
+
+
 
 const Register = (props) => {
   const [error, setError] = useState();
@@ -46,8 +48,11 @@ const Register = (props) => {
   };
 
   return (
+
+    
+
     <>
-      <View
+     <View
         style={{
           height: 100,
           width: "100%",
@@ -74,106 +79,91 @@ const Register = (props) => {
           />
         </Svg>
       </View>
-      <View style={style.container}>
-        {error ? <Text>{error}</Text> : <Text></Text>}
-        <View style={style.formContiner}>
+    <View style={style.container}>
+      
+     
+      {error ? <Text>{error}</Text> : <Text></Text>}
+      <View style={style.formContiner}>
+        <View >
+
+        <Text style={{textAlign:"left", fontSize: 32, marginBottom: 10, fontWeight:'700', color:"#777" }}>
+          Register
+          </Text>
+
+
+          {/* username */}
+
           <View>
-            <Text
-              style={{
-                textAlign: "left",
-                fontSize: 32,
-                marginBottom: 10,
-                fontWeight: "700",
-                color: "#777",
-              }}
-            >
-              Register
-            </Text>
 
-            {/* username */}
-
-            <View>
-              <AntDesign
-                name="user"
-                size={24}
-                color="#777"
-                style={{ position: "absolute", right: 5, bottom: 30 }}
-              />
-              <TextInput
-                style={style.input}
-                onChangeText={(username) => setUsername(username)}
-                placeholder="Username"
-              />
-            </View>
-
-            {/* mobile */}
-            <View>
-              <AntDesign
-                name="mobile1"
-                size={24}
-                color="#777"
-                style={{ position: "absolute", right: 5, bottom: 30 }}
-              />
-              <TextInput
-                style={style.input}
-                placeholder="Mobile"
-                onChangeText={(mobile) => setMobile(mobile)}
-              />
-            </View>
-
-            {/* email */}
-
-            <View>
-              <MaterialIcons
-                name="email"
-                size={24}
-                color="#777"
-                style={{ position: "absolute", right: 5, bottom: 30 }}
-              />
-              <TextInput
-                style={style.input}
-                placeholder="Email"
-                onChangeText={(email) => setEmail(email)}
-              />
-            </View>
-
-            {/* password */}
-
-            <View>
-              <MaterialCommunityIcons
-                name="form-textbox-password"
-                size={24}
-                color="#777"
-                style={{ position: "absolute", right: 5, bottom: 30 }}
-              />
-
-              <TextInput
-                style={style.input}
-                placeholder="Password"
-                onChangeText={(password) => setPassword(password)}
-                secureTextEntry={true}
-              />
-            </View>
-
-            <TouchableOpacity
-              style={style.buttonContainer}
-              onPress={() => registerHandler()}
-            >
-              <Text style={style.buttonText}>SIGN UP</Text>
-            </TouchableOpacity>
-
-            <TouchableOpacity
-              onPress={() => props.navigation.navigate("Login")}
-            >
-              <Text style={{ color: "#f76902", textAlign: "center" }}>
-                Already a User? Sign in
-              </Text>
-            </TouchableOpacity>
+          <AntDesign name="user" size={24} color="#777" 
+          style={{position:"absolute", right:5, bottom:30}}/>
+          <TextInput
+            style={style.input}
+            onChangeText={(username) => setUsername(username)}
+            placeholder="Username"
+          />
           </View>
+
+         
+          {/* mobile */}
+          <View>
+          <AntDesign name="mobile1" size={24} color="#777" style={{position:"absolute", right:5, bottom:30}} />
+          <TextInput
+            style={style.input}
+            placeholder="Mobile"
+            onChangeText={(mobile) => setMobile(mobile)}
+          />
+          </View>
+         
+
+          {/* email */}
+
+          <View>
+
+          <MaterialIcons name="email" size={24} color="#777" style={{position:"absolute", right:5, bottom:30}} />          
+          <TextInput
+            style={style.input}
+            placeholder="Email"
+            onChangeText={(email) => setEmail(email)}
+          />
+          </View>
+
+
+          {/* password */}
+
+          <View>
+          <MaterialCommunityIcons name="form-textbox-password" size={24} color="#777"
+          style={{position:"absolute", right:5, bottom:30}} />
+
+          <TextInput
+            style={style.input}
+            placeholder="Password"
+            onChangeText={(password) => setPassword(password)}
+            secureTextEntry={true}
+          />
+          </View>
+         
+          
+
+          <TouchableOpacity
+            style={style.buttonContainer}
+            onPress={() => registerHandler()}
+          >
+            <Text style={style.buttonText}>SIGN UP</Text>
+          </TouchableOpacity>
+
+          <TouchableOpacity
+           
+            onPress={() => props.navigation.navigate("Login") }
+          >
+            <Text  style={{color: "#f76902", textAlign:"center"}}>Already a User? Sign in</Text>
+          </TouchableOpacity>
         </View>
       </View>
+    </View>
     </>
   );
+
 };
 
 export const RegisterScreenOptions = (navData) => {
@@ -188,10 +178,11 @@ export const RegisterScreenOptions = (navData) => {
 
 const style = StyleSheet.create({
   container: {
-    flex: 1,
-    justifyContent: "center",
-    alignSelf: "center",
-    width: Dimensions.get("window").width * 0.85,
+   flex: 1,
+   justifyContent: "center",
+   alignSelf:"center",
+   width:Dimensions.get('window').width*0.85,
+   
   },
   welcome: {
     fontSize: 30,
@@ -210,19 +201,24 @@ const style = StyleSheet.create({
     borderBottomColor: "#777",
     borderBottomWidth: 1.5,
     fontSize: 16,
+    
+    
   },
   buttonContainer: {
-    width: Dimensions.get("screen").width * 0.7,
+    width:Dimensions.get('screen').width*0.7,
     backgroundColor: "#f76902",
     paddingVertical: 15,
     borderRadius: 30,
     marginBottom: 15,
-    alignSelf: "center",
+    alignSelf:"center",
   },
   buttonText: {
     textAlign: "center",
     fontWeight: "700",
     color: "#FFF",
+    
+    
+    
   },
 });
 

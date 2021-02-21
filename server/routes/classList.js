@@ -67,6 +67,8 @@ router.get("/:user_id/courses/:id/classlist", (req, res) => {
     {
       $project: {
         user: true,
+        nickname: true,
+        hometown: true,
         firstname: true,
         lastname: true,
         profile_pic: true,

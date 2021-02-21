@@ -1,6 +1,7 @@
 import React from "react";
 import { View, Text } from "react-native";
 
+
 import { Dimensions } from "react-native";
 import Svg, { Path } from "react-native-svg";
 import Logout from "../login/logout";
@@ -8,7 +9,7 @@ import Logout from "../login/logout";
 const notification = (props) => {
   return (
     <>
-      <View
+    <View
         style={{
           height: 100,
           width: "100%",
@@ -34,13 +35,13 @@ const notification = (props) => {
                     384,0,288,0C192,0,96,0,48,0L0,0Z"
           />
         </Svg>
-        <View style={{ position: "absolute", right: 0, top: 40 }}>
-          <Logout />
-        </View>
+        <View style={{position:"absolute", right:0, top:40,}}>
+            <Logout/>
       </View>
-      <View style={{ flex: 1, alignItems: "center", justifyContent: "center" }}>
-        <Text>This is notification</Text>
       </View>
+    <View style={{ flex: 1, alignItems: "center", justifyContent: "center" }}>
+      <Text>This is notification</Text>
+    </View>
     </>
   );
 };

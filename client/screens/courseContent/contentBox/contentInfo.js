@@ -65,11 +65,7 @@ const ContentInfo = (props) => {
             <TouchableOpacity
               style={styles.item}
               onPress={() =>
-                props.navigation.navigate("WeekContent", {
-                  item,
-                  WeekCourseID,
-                  imageURI,
-                })
+                props.navigation.navigate("WeekContent", { item, WeekCourseID,imageURI })
               }
             >
               <Text style={styles.title}>{item.weekname}</Text>
@@ -98,13 +94,13 @@ const styles = StyleSheet.create({
     borderRadius: 10,
     backgroundColor: "#F5FCFF",
     shadowColor: "#000",
-    shadowOffset: {
-      width: 0,
-      height: 2,
-    },
-    shadowOpacity: 0.25,
-    shadowRadius: 3.84,
-    elevation: 5,
+                    shadowOffset: {
+                      width: 0,
+                      height: 2,
+                    },
+                    shadowOpacity: 0.25,
+                    shadowRadius: 3.84,
+                    elevation: 5,
   },
   title: {
     fontSize: 16,

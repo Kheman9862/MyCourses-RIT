@@ -38,7 +38,7 @@ const viewer = (action, data, navigation) => {
 };
 
 const WeekContent = ({ navigation, route }) => {
-  const { item, WeekCourseID, imageURI } = route.params;
+  const { item, WeekCourseID,imageURI } = route.params;
   // :user_id/courses/:id/:weekId
   const user = useSelector((state) => state.auth.user);
   const loading = useSelector((state) => state.week.loading);
@@ -133,13 +133,13 @@ const styles = StyleSheet.create({
     borderRadius: 10,
     backgroundColor: "#F5FCFF",
     shadowColor: "#000",
-    shadowOffset: {
-      width: 0,
-      height: 2,
-    },
-    shadowOpacity: 0.25,
-    shadowRadius: 3.84,
-    elevation: 5,
+                    shadowOffset: {
+                      width: 0,
+                      height: 2,
+                    },
+                    shadowOpacity: 0.25,
+                    shadowRadius: 3.84,
+                    elevation: 5,
   },
   title: {
     fontSize: 16,

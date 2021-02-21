@@ -32,7 +32,7 @@ const profile = function App(props) {
 
   return (
     <>
-      <View
+    <View
         style={{
           height: 100,
           width: "100%",
@@ -58,26 +58,32 @@ const profile = function App(props) {
                     384,0,288,0C192,0,96,0,48,0L0,0Z"
           />
         </Svg>
-        <View style={{ position: "absolute", right: 0, top: 40 }}>
-          <Logout />
-        </View>
+        <View style={{position:"absolute", right:0, top:40,}}>
+            <Logout/>
       </View>
-      <SafeAreaView style={styles.container}>
-        {loading ? (
-          <ActivityIndicator size="large" color={Colors.primary} />
-        ) : (
-          <View>
-            <ScrollView showsVerticalScrollIndicator={false}>
-              {/* Back Arrow and question mark Icons can be removed if not needed  */}
+      </View>
+    <SafeAreaView style={styles.container}>
+      {loading ? (
+        <ActivityIndicator size="large" color={Colors.primary} />
+      ) : (
 
-              <View style={{ alignSelf: "center", marginTop: 30 }}>
-                <View style={styles.profileImage}>
-                  <Image
-                    source={{ uri: profile.profile_pic }}
-                    style={styles.image}
-                  />
-                </View>
-              </View>
+        
+        <View >
+       
+       
+        <ScrollView  showsVerticalScrollIndicator={false}>
+          {/* Back Arrow and question mark Icons can be removed if not needed  */}
+
+          <View style={{ alignSelf: "center", marginTop: 30 }}>
+            <View style={styles.profileImage}>
+              <Image
+                source={{ uri: profile.profile_pic }}
+                style={styles.image}
+              />
+            </View>
+
+           
+          </View>
 
               <View style={styles.infoContainer}>
                 <Text
